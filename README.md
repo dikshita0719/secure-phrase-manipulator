@@ -27,6 +27,10 @@ The project  has been divided into 4 phases to simplify the work load and increa
 - Input validation and skipping empty entries.
 - calculate_transform_key() performs Bitwise Operations for the numbers from the user input
 
+### Phase 2: String Manipulation & Ownership
+- `transform_phrase()` moves `String` ownership into the function.
+- Returns modified `String` and derived metrics as a tuple.
+- Demonstrates **move semantics** vs **copy semantics** for primitives.
 ---
 
 ## Installation & Usage
