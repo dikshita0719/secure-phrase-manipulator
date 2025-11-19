@@ -15,12 +15,27 @@ fn main() {
         io::stdin().read_line(&mut input).unwrap();
 
         //to ensure the whitespaces are removed before the input is processsed
-        let input = input.trim();
+        let trimmed_input = input.trim();
 
         if input == "q" {break;}
 
         else{
-            calculate_transform_key(input);
+            //Phase 1
+            calculate_transform_key(trimmed_input);
+
+            //Phase 2
+            let length = input.len() ;
+            println!("Before Move: ");
+            println!("Stack Address of input(String -> non-primitive: {:p} \n Heap Content: {:#?}", &input, input.as_ptr());
+            println!("Stack Address of Length(usize -> primitive): {} \n Content: {}", &length, length);
+
+            let (new_input, new_length) = transform_phrase(input,length );
+
+            println!("After Move: ");
+            println!("Stack Address of New Input(String -> non-primitive): {:p} \n Heap Content: {:#?}", &new_input, new_input.as_ptr());
+            println!("Stack Address of New Length(usize -> primitive): {} \n Content: {}", &new_length, new_length);
+
+
             continue;}
 
     }
@@ -41,7 +56,18 @@ fn calculate_transform_key(input: &str){
         let xor = slices[i] ^ slices[i + 1];
         println!("Bitwise OR of {} ,  {} = {:0>4b}\n", slices[i], slices[i + 1], or);
         println!("Bitwise AND of {} ,  {} = {:0>4b}\n ", slices[i], slices[i + 1], and);
-        println!("Bitwise AND of {} ,  {} = {:0>4b}\n ", slices[i], slices[i + 1], xor);
+        println!("Bitwise XOR of {} ,  {} = {:0>4b}\n ", slices[i], slices[i + 1], xor);
     }
 
+}
+
+fn transform_phrase(input: String, key: usize ) -> (String, usize) {
+    let mut new_input = input.trim_end().to_string();
+    println!("Your Input:{}\nInput length: {}\n", new_input, key);
+    new_input.push_str(&format!("_Hello❤ {} ", key).as_str());
+    let len = new_input.len();
+
+    println!("Following tuple will be used from now one: ({} , {})", new_input, len);
+
+    (new_input, len )
 }
