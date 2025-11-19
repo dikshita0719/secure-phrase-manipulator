@@ -16,6 +16,19 @@ This project emphasizes Rust’s **ownership**, **borrowing**, and **mutability*
 
 ---
 
+## Project Phases
+
+The project  has been divided into 4 phases to simplify the work load and increase productivity.
+
+### Phase 1: Setup & Control Flow
+- Program initialization with `main()`.
+- Infinite loop for user input with exit on `"q"`.
+- Optional command-line input via `std::env::args()`.
+- Input validation and skipping empty entries.
+- calculate_transform_key() performs Bitwise Operations for the numbers from the user input
+
+---
+
 ## Installation & Usage
 1. Clone the repository:
    ```bash
