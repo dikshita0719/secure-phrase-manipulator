@@ -17,13 +17,15 @@ fn main() {
         //to ensure the whitespaces are removed before the input is processsed
         let trimmed_input = input.trim();
 
-        if input == "q" {break;}
+        if trimmed_input == "q" {break;}
 
         else{
             //Phase 1
+            println!("\n-----Phase 1-----");
             calculate_transform_key(trimmed_input);
 
             //Phase 2
+            println!("\n-----Phase 2-----");
             let length = input.len() ;
             println!("Before Move: ");
             println!("Stack Address of input(String -> non-primitive: {:p} \n Heap Content: {:#?}", &input, input.as_ptr());
@@ -34,6 +36,20 @@ fn main() {
             println!("After Move: ");
             println!("Stack Address of New Input(String -> non-primitive): {:p} \n Heap Content: {:#?}", &new_input, new_input.as_ptr());
             println!("Stack Address of New Length(usize -> primitive): {} \n Content: {}", &new_length, new_length);
+
+            //Phase 3
+            println!("\n-----Phase 3-----");
+
+            println!("Enter a char to find its first ocurrence in your text:");
+            let mut to_find = String::new();
+            io::stdin().read_line(&mut to_find).unwrap();
+            let c = to_find
+                .trim()           // remove newline
+                .chars()
+                .next()
+                .expect("No character entered");
+
+            analyze_phrase(&new_input, c);
 
 
             continue;}
@@ -46,17 +62,21 @@ fn calculate_transform_key(input: &str){
         .filter(|c| c.is_ascii_digit())
         .map(|c| c.to_digit(10).unwrap() as i32) // convert '0'..'9' -> 0..9
         .collect();
+    if slices.is_empty(){
+        println!("No digits entered");
+        return;}
+    else {
+        println!("Numbers in the text: {:?}", slices);
 
-    println!("Numbers in the text: {:?}", slices);
-
-    for i in 0..slices.len() - 1 {
-        println!("x = {}, y = {} ", slices[i], slices[i + 1]);
-        let or = slices[i] | slices[i + 1];
-        let and = slices[i] & slices[i + 1];
-        let xor = slices[i] ^ slices[i + 1];
-        println!("Bitwise OR of {} ,  {} = {:0>4b}\n", slices[i], slices[i + 1], or);
-        println!("Bitwise AND of {} ,  {} = {:0>4b}\n ", slices[i], slices[i + 1], and);
-        println!("Bitwise XOR of {} ,  {} = {:0>4b}\n ", slices[i], slices[i + 1], xor);
+        for i in 0..slices.len() - 1 {
+            println!("x = {}, y = {} ", slices[i], slices[i + 1]);
+            let or = slices[i] | slices[i + 1];
+            let and = slices[i] & slices[i + 1];
+            let xor = slices[i] ^ slices[i + 1];
+            println!("Bitwise OR of {} ,  {} = {:0>4b}\n", slices[i], slices[i + 1], or);
+            println!("Bitwise AND of {} ,  {} = {:0>4b}\n ", slices[i], slices[i + 1], and);
+            println!("Bitwise XOR of {} ,  {} = {:0>4b}\n ", slices[i], slices[i + 1], xor);
+        }
     }
 
 }
@@ -70,4 +90,20 @@ fn transform_phrase(input: String, key: usize ) -> (String, usize) {
     println!("Following tuple will be used from now one: ({} , {})", new_input, len);
 
     (new_input, len )
+}
+
+fn analyze_phrase(transformed_phrase: &str, to_find: char){
+        loop {
+            let i = transformed_phrase.chars().enumerate();
+            for (x, y) in i {
+                if y == 'a' || y == 'e' || y == 'i' || y == 'o' || y == 'u' {
+                    println!("Index:{} | Vowel: {} ", x, y);
+                }
+                if y == to_find {
+                    println!("index: {}", x);
+                    break;
+                }
+            }
+            break;
+        }
 }

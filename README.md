@@ -32,6 +32,12 @@ The project  has been divided into 4 phases to simplify the work load and increa
 - Returns modified `String` and derived metrics as a tuple.
 - Demonstrates **move semantics** vs **copy semantics** for primitives.
 ---
+### Phase 3: Analysis, Slicing, and Nested Loops (E02)
+- `analyze_phrase()`, that takes the `transformed phrase` as an immutable string slice (&str).
+- must iterate through the slice character by character using **.chars().enumerate()**.
+- Uses  loop to simulate complex processing.
+- Inside the loop, **if/else** logic implemented to classify and count the characters based on a condition (counting vowels).
+---
 
 ## Installation & Usage
 1. Clone the repository:
